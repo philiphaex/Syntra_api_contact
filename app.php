@@ -23,8 +23,49 @@ session_start();
     <?php
     echo $_SESSION['user_id'];
     ?>
-</div>
+    <h2>Search Form</h2>
+    <form class="form-inline well" method="post" action="oo.php">
+        <div class="form-group">
+            <label for="search">Search</label>
+            <input name="search" type="text" class="form-control" id="search" placeholder="give a name">
+        </div>
+        <input  name="btn-search" type="submit" value="Search" class="btn btn-primary">
+    </form>
+    <h2>Add Contact</h2>
+    <form class="form-inline well" id="form-add" >
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input name="name" type="text" class="form-control" id="name">
+        </div>
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <input name="email" type="text" class="form-control" id="email">
+        </div>
+        <input name="btn-add" type="submit" value="Toevoegen" class="btn btn-primary">
+    </form>
+    <div class="overzicht">
+        <table class='table table-hover'>
+            <thead>
+            <tr>
+                <th>Naam</th>
+                <th>E-mail</th>
+            </tr>
 
+            </thead>
+            <tbody>
+
+
+            </tbody>
+    </div>
+
+
+
+</div>
+<script>
+
+
+    
+</script>
 
 
 

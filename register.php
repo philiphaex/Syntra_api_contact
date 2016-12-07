@@ -24,18 +24,19 @@ session_start();
 <body>
 
 <div class="container">
-    <h1>Login</h1>
+    <h1>Register</h1>
     <form method="post" action='./api/user.php'>
         <div class="form-group">
             <label for="username">Username</label><input type="text" id="username" name="username" class="form-control">
         </div>
         <div class="form-group">
+            <label for="email">E-mail</label><input type="email" id="email" name="email" class="form-control">
+        </div>
+        <div class="form-group">
             <label for="password">Password</label><input type="password" id="password" name="password" class="form-control">
         </div>
-        <input type="submit" name="login" value="Login" class="btn btn-primary">
+        <input type="submit" name="register" value="Register" class="btn btn-primary">
     </form>
-    <br>
-    <div>New user? click here to <a href="register.php">register</a></div>
 </div>
 
 

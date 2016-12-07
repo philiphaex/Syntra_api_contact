@@ -12,15 +12,21 @@ $db = new Db\Database();
 $method = $_SERVER['REQUEST_METHOD'];
 switch ($method) {
     case 'POST':
-        if (isset($_POST)) {
+        if (!isset($_POST['email'])) {
             $user = new User($_POST['username'], $_POST['password'], $db);
             $user->authentication();
         }
-    case 'GET':
+        if (isset($_POST['email'])){
+            $user = new User($_POST['username'], $_POST['password'], $db);
+            $user->register($_POST['email']);
+        }
+
+
+   /* case 'GET':
 
     case 'PUT':
 
-    case 'DELETE':
+    case 'DELETE':*/
 }
 
 
@@ -65,9 +71,11 @@ class User
 
         $data= array(
             'login'=>$this->_username,
+            'email'=>$this->_email,
             'password'=>$this->_password,
         );
 
-        $db->insert('users');
+        $db->insert('users',$data);
+        header('Location: ../index.php');
     }
 }
