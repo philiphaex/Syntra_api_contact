@@ -24,12 +24,12 @@ session_start();
     echo $_SESSION['user_id'];
     ?>
     <h2>Search Form</h2>
-    <form class="form-inline well" method="post" action="oo.php">
+    <form class="form-inline well" method="get" action="./api/contact.php">
         <div class="form-group">
             <label for="search">Search</label>
             <input name="search" type="text" class="form-control" id="search" placeholder="give a name">
         </div>
-        <input  name="btn-search" type="submit" value="Search" class="btn btn-primary">
+        <input  id='search' name="btn-search" type="submit" value="Search" class="btn btn-primary">
     </form>
     <h2>Add Contact</h2>
     <form class="form-inline well" id="form-add" >
@@ -62,9 +62,18 @@ session_start();
 
 </div>
 <script>
+$('#search').click(
+    function (e) {
+        e.preventDefault()
+        $.getJSON('./api/user.php')
+            .done(function( json ) {
+                console.log( json );
+            })
+
+    }
+)
 
 
-    
 </script>
 
 
