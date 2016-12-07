@@ -7,7 +7,7 @@ class Database
     private $_host = 'localhost';
     private $_login = 'root';
     private $_pw = '';
-    private $_db = 'usersystem';
+    private $_db = 'contactbeheer';
     private $_conn;
 
     /*
@@ -20,7 +20,7 @@ class Database
     public function connect()
     {
 
-        $this->_conn = new mysqli($this->_host, $this->_login, $this->_pw, $this->_db);
+        $this->_conn = new \mysqli($this->_host, $this->_login, $this->_pw, $this->_db);
         // Check connection
         if ($this->_conn->connect_error) {
             echo $this->_conn->connect_error;
@@ -91,6 +91,25 @@ class Database
             return false; // Table does not exist
         }
     }
+
+    public function insert($table,$params=array()){
+        // Check to see if the table exists
+        if($this->tableExists($table)){
+            $sql='INSERT INTO `'.$table.'` (`'.implode('`, `',array_keys($params)).'`) VALUES ("' . implode('", "', $params) . '")';
+            $this->myQuery = $sql; // Pass back the SQL
+            // Make the query to insert to the database
+            if($ins = $this->_conn->query($sql)){
+                array_push($this->result,$this->_conn->insert_id);
+                return true; // The data has been inserted
+            }else{
+                array_push($this->result,$this->_conn->error);
+                return false; // The data has not been inserted
+            }
+        }else{
+            return false; // Table does not exist
+        }
+    }
+
     public function getResult(){
         $val = $this->result;
         $this->result = array();
