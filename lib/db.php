@@ -116,5 +116,4 @@ class Database
         return $val;
     }
 
-
 }

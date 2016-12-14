@@ -24,15 +24,15 @@ session_start();
     echo $_SESSION['user_id'];
     ?>
     <h2>Search Form</h2>
-    <form class="form-inline well" method="get" action="./api/contact.php">
+    <form class="form-inline well" id="form-search">
         <div class="form-group">
             <label for="search">Search</label>
-            <input name="search" type="text" class="form-control" id="search" placeholder="give a name">
+            <input name="search" type="text" class="form-control" id="search">
         </div>
-        <input  id='search' name="btn-search" type="submit" value="Search" class="btn btn-primary">
+        <input id='btn-search' name="btn-search" type="submit" value="Search" class="btn btn-primary">
     </form>
     <h2>Add Contact</h2>
-    <form class="form-inline well" id="form-add" >
+    <form class="form-inline well" id="form-add">
         <div class="form-group">
             <label for="name">Name</label>
             <input name="name" type="text" class="form-control" id="name">
@@ -41,12 +41,13 @@ session_start();
             <label for="email">E-mail</label>
             <input name="email" type="text" class="form-control" id="email">
         </div>
-        <input name="btn-add" type="submit" value="Toevoegen" class="btn btn-primary">
+        <input id='btn-add' name="btn-add" type="submit" value="Add" class="btn btn-primary">
     </form>
     <div class="overzicht">
         <table class='table table-hover'>
             <thead>
             <tr>
+                <th>Nr</th>
                 <th>Naam</th>
                 <th>E-mail</th>
             </tr>
@@ -59,23 +60,50 @@ session_start();
     </div>
 
 
-
 </div>
-<script>
-$('#search').click(
-    function (e) {
-        e.preventDefault()
-        $.getJSON('./api/user.php')
-            .done(function( json ) {
-                console.log( json );
+<script type="text/javascript">
+    $(document).ready(function(){
+        $.getJSON('./api/contact.php',function(contacts){
+            $.each(contacts,function(index,contact){
+//                $('tbody').append('<tr><td>' + index + '</td><td>' + contact.firstname + '</td><td>' + contact.email+'</td></tr>');
+//                $('tbody').append('<tr><td>' + index + '</td><td>' + contact.firstname + '</td><td>' + contact.email+'</td></tr>');
             })
+        });
 
-    }
-)
 
+        })
+
+
+
+
+    //contact zoek
+    $('#form-search').submit(function (e) {
+        e.preventDefault();
+        var query = $('#search').val();
+        $.getJSON('./api/contact.php', {keyword: query});
+
+
+    })
+
+
+    //contact toevoegen
+    $('#form-add').submit(function (e) {
+        e.preventDefault();
+
+        var data = {
+            firstname: $('#name').val(),
+            email: $('#email').val()
+        }
+        console.log(data);
+        $.ajax({
+            type: 'POST',
+            url: './api/contact.php',
+            data: data,
+            dataType: 'json'
+        })
+    })
 
 </script>
-
 
 
 </body>
